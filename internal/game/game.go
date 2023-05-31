@@ -28,8 +28,6 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) iterate() {
-	dir := geometry.DirNone
-
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
 		g.play.Reset()
 		return
@@ -39,16 +37,36 @@ func (g *Game) iterate() {
 		os.Exit(0)
 	}
 
+	dir := getStarshipDirection()
+	g.play.MoveStarship(dir)
+}
+
+func getStarshipDirection() geometry.Direction {
+	dir := geometry.DirNone
+
 	if ebiten.IsKeyPressed(ebiten.KeyUp) {
-		dir = geometry.DirUp
+		if ebiten.IsKeyPressed(ebiten.KeyLeft) {
+			dir = geometry.DirLeftUp
+		} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
+			dir = geometry.DirRightUp
+		} else {
+			dir = geometry.DirUp
+		}
 	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
-		dir = geometry.DirDown
+		if ebiten.IsKeyPressed(ebiten.KeyLeft) {
+			dir = geometry.DirLeftDown
+		} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
+			dir = geometry.DirRightDown
+		} else {
+			dir = geometry.DirDown
+		}
 	} else if ebiten.IsKeyPressed(ebiten.KeyLeft) {
 		dir = geometry.DirLeft
 	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
 		dir = geometry.DirRight
 	}
-	g.play.MoveStarship(dir)
+
+	return dir
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {

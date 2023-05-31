@@ -9,4 +9,8 @@ const (
 	DirRight
 	DirDown
 	DirUp
+	DirLeftDown
+	DirLeftUp
+	DirRightDown
+	DirRightUp
 )
