@@ -1,9 +1,18 @@
 package main
 
 import (
-	"fmt"
+	"log"
+
+	"github.com/hajimehoshi/ebiten/v2"
+
+	"juanantoniocid/mariana/internal/game"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+	ebiten.SetWindowSize(game.ScreenWidth, game.ScreenHeight)
+	ebiten.SetWindowTitle("Snake [Zippo Games]")
+
+	if err := ebiten.RunGame(game.NewGame()); err != nil {
+		log.Fatal(err)
+	}
 }
