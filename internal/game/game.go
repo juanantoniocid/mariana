@@ -81,12 +81,6 @@ func (g *Game) drawStarship(screen *ebiten.Image) {
 			screen, float32(p.X)*gridSize, float32(p.Y)*gridSize, gridSize, gridSize,
 			color.RGBA{R: 0x80, G: 0xa0, B: 0xc0, A: 0xff}, false)
 	}
-
-	starshipGravityCenter := g.play.GetStarshipGravityCenter()
-	vector.DrawFilledRect(
-		screen, float32(starshipGravityCenter.X)*gridSize, float32(starshipGravityCenter.Y)*gridSize, gridSize, gridSize,
-		color.RGBA{R: 0xFF, A: 0xff}, false)
-
 }
 
 func (g *Game) Layout(_, _ int) (int, int) {

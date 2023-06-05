@@ -34,13 +34,18 @@ func (p *Play) Reset() {
 }
 
 func (p *Play) initStarship() {
-	p.starship = characters.NewStarship(p.boardWidth/2, p.boardHeight/2)
+	startingPoint := geometry.Point{
+		X: p.boardWidth / 2,
+		Y: p.boardHeight / 2,
+	}
+	endOfUniverse := geometry.Point{
+		X: p.boardWidth - 1,
+		Y: p.boardHeight - 1,
+	}
+
+	p.starship = characters.NewStarship(startingPoint, endOfUniverse)
 }
 
 func (p *Play) GetStarshipShape() geometry.Shape {
 	return p.starship.GetShape()
-}
-
-func (p *Play) GetStarshipGravityCenter() geometry.Point {
-	return p.starship.GetGravityCenter()
 }
