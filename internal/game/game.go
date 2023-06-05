@@ -13,9 +13,10 @@ import (
 )
 
 const (
-	ScreenWidth          = 640
-	ScreenHeight         = 480
-	gridSize     float32 = 5
+	ScreenWidth            = 320
+	ScreenHeight           = 200
+	gridSize       float32 = 1
+	SizeMultiplier         = 3
 )
 
 type Game struct {
@@ -80,6 +81,12 @@ func (g *Game) drawStarship(screen *ebiten.Image) {
 			screen, float32(p.X)*gridSize, float32(p.Y)*gridSize, gridSize, gridSize,
 			color.RGBA{R: 0x80, G: 0xa0, B: 0xc0, A: 0xff}, false)
 	}
+
+	starshipGravityCenter := g.play.GetStarshipGravityCenter()
+	vector.DrawFilledRect(
+		screen, float32(starshipGravityCenter.X)*gridSize, float32(starshipGravityCenter.Y)*gridSize, gridSize, gridSize,
+		color.RGBA{R: 0xFF, A: 0xff}, false)
+
 }
 
 func (g *Game) Layout(_, _ int) (int, int) {

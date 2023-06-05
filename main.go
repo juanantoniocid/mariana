@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	ebiten.SetWindowSize(game.ScreenWidth, game.ScreenHeight)
-	ebiten.SetWindowTitle("Snake [Zippo Games]")
+	ebiten.SetWindowSize(game.ScreenWidth*game.SizeMultiplier, game.ScreenHeight*game.SizeMultiplier)
+	ebiten.SetWindowTitle("Mariana (Zippo Studios)")
 
 	if err := ebiten.RunGame(game.NewGame()); err != nil {
 		log.Fatal(err)

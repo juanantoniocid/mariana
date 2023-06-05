@@ -4,17 +4,34 @@ import "juanantoniocid/mariana/internal/geometry"
 
 // Starship represents a starship
 type Starship struct {
-	body  geometry.Shape
-	speed int
+	gravityCenter geometry.Point
+	body          geometry.Shape
+	speed         int
 }
 
 // Move moves the starship
 func (s *Starship) Move(dir geometry.Direction) {
 	incX, incY := s.getJump(dir)
 
-	for i := int64(len(s.body)) - 1; i >= 0; i-- {
-		s.body[i].X += incX
-		s.body[i].Y += incY
+	s.gravityCenter.X += incX
+	s.gravityCenter.Y += incY
+
+	bitmap := getBitmap()
+	s.body = geometry.GetShapeFromBitmap(bitmap, s.gravityCenter, dir)
+}
+
+func getBitmap() [][]bool {
+	o := false
+	x := true
+
+	return [][]bool{
+		{x, x, x, x, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o},
+		{x, x, x, x, x, x, x, x, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o},
+		{x, x, x, x, x, x, x, x, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o},
+		{x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, o, o, o, o, o, o, o},
+		{x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x},
+		{x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x},
+		{x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, o, o, o, o, o, o, o, o, o, o, o},
 	}
 }
 
@@ -41,10 +58,15 @@ func (s *Starship) GetShape() geometry.Shape {
 	return s.body
 }
 
+// GetGravityCenter returns the gravity center of the starship
+func (s *Starship) GetGravityCenter() geometry.Point {
+	return s.gravityCenter
+}
+
 // NewStarship creates a new starship
 func NewStarship(posX, posY int) *Starship {
 	return &Starship{
-		body: []geometry.Position{
+		body: []geometry.Point{
 			{X: posX, Y: posY},
 			{X: posX - 1, Y: posY},
 			{X: posX + 1, Y: posY},

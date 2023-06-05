@@ -40,3 +40,7 @@ func (p *Play) initStarship() {
 func (p *Play) GetStarshipShape() geometry.Shape {
 	return p.starship.GetShape()
 }
+
+func (p *Play) GetStarshipGravityCenter() geometry.Point {
+	return p.starship.GetGravityCenter()
+}
